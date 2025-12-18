@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard Kantor Imigrasi Kelas 1 Non TPI Pemalang</title>
+    <style>
+        /* --- Google Font Import --- */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+        /* --- Global Styles & Reset --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f0f4f8;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        .dashboard-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* --- Header --- */
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 40px;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .header-left {
+            flex-grow: 1;
+        }
+
+        .header-right {
+            flex-shrink: 0;
+        }
+
+        .dashboard-header h1 {
+            color: #1a3b5d;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .dashboard-header p {
+            color: #6c757d;
+            font-size: 1.1rem;
+        }
+
+        .balance-bar {
+            background-color: #28a745;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+            text-align: center;
+        }
+
+        .balance-bar p {
+            margin: 0;
+            font-size: 0.9rem;
+            font-weight: 500;
+        }
+
+        .balance-bar h2 {
+            margin: 5px 0 0 0;
+            font-size: 1.4rem;
+            font-weight: 700;
+        }
+
+        /* --- Banner Section --- */
+        .banner-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .banner-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .banner-image:hover {
+            transform: scale(1.03);
+        }
+
+        /* --- Content Wrapper --- */
+        .content-wrapper {
+            display: flex;
+            flex-direction: column;
+            gap: 25px;
+        }
+
+        /* --- Card Styles --- */
+        .card {
+            background-color: #ffffff;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.07);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .card-urgent {
+            border-left: 5px solid #dc3545;
+        }
+        
+        .card-completed {
+            border-left: 5px solid #28a745;
+        }
+
+        .card-approved {
+            border-left: 5px solid #28a745;
+        }
+
+        .card-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .card-body p {
+            margin: 5px 0;
+            font-size: 0.95rem;
+        }
+
+        .card-body strong {
+            color: #1a3b5d;
+            font-weight: 600;
+        }
+
+        /* --- Action Area for Passport Input --- */
+        .action-area {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+        
+        .action-area label {
+            font-weight: 600;
+            color: #1a3b5d;
+            margin-top: 5px;
+        }
+
+        /* --- Badge Styles --- */
+        .badge {
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #fff;
+            text-transform: uppercase;
+        }
+
+        .badge-danger { background-color: #dc3545; }
+        .badge-success { background-color: #28a745; }
+
+        /* --- Button Styles --- */
+        .btn {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn:disabled {
+            cursor: not-allowed;
+            opacity: 0.7;
+        }
+
+        .btn-primary {
+            background-color: #007bff;
+            color: #fff;
+        }
+        .btn-primary:hover:not(:disabled) { background-color: #0056b3; }
+
+        .btn-secondary {
+            background-color: transparent;
+            color: #007bff;
+            border: 2px solid #007bff;
+            margin: 20px auto 0;
+            display: block;
+        }
+        .btn-secondary:hover {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        .btn-copy {
+            background-color: #e9ecef;
+            color: #495057;
+            padding: 5px 12px;
+            font-size: 0.8rem;
+            border-radius: 5px;
+            white-space: nowrap;
+        }
+        .btn-copy:hover {
+            background-color: #dee2e6;
+        }
+        
+        /* --- Form Control Styles --- */
+        .form-control {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s, box-shadow 0.3s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: #007bff;
+            box-shadow: 0 0 0 3px rgba(0, 123, 255, 0.2);
+        }
+        .form-control.is-invalid {
+            border-color: #dc3545;
+        }
+
+        .invalid-feedback {
+            color: #dc3545;
+            font-size: 0.875rem;
+            margin-top: 5px;
+            display: none;
+        }
+
+        /* --- Loader Spinner --- */
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            border-left-color: #007bff;
+            align-self: center;
+            animation: spin 1s linear infinite;
+        }
+
+        .btn-spinner {
+            width: 18px;
+            height: 18px;
+            border: 2px solid #ffffff;
+            border-left-color: transparent;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* --- Modal Styles --- */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.6);
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: auto;
+            padding: 30px;
+            border: 1px solid #888;
+            width: 100%;
+            max-width: 600px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {opacity: 0; transform: translateY(-20px);}
+            to {opacity: 1; transform: translateY(0);}
+        }
+
+        .close {
+            color: #aaa;
+            position: absolute;
+            top: 15px;
+            right: 20px;
+            font-size: 32px;
+            font-weight: bold;
+            line-height: 1;
+        }
+
+        .close:hover,
+        .close:focus {
+            color: #000;
+            text-decoration: none;
+            cursor: pointer;
+        }
+
+        .modal-header {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+        }
+
+        .modal-logo {
+            width: 100px;
+            height: auto;
+            margin-bottom: 15px;
+        }
+
+        .modal-header h2 {
+            color: #1a3b5d;
+            border-bottom: 2px solid #f0f4f8;
+            padding-bottom: 10px;
+            margin-bottom: 20px;
+            width: 100%;
+        }
+
+        .modal-body p {
+            margin-bottom: 10px;
+            font-size: 0.95rem;
+        }
+
+        .modal-body strong {
+            color: #1a3b5d;
+        }
+        
+        .copy-code-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        /* --- New Style for Prominent Payment Code --- */
+        .payment-code-display {
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 1.4rem;
+            font-weight: 700;
+            color: #d63384; /* A contrasting pinkish-red color */
+            background-color: #f8d7da;
+            padding: 10px 15px;
+            border-radius: 8px;
+            letter-spacing: 2px; /* Adds space between characters */
+            border: 1px dashed #f5c6cb;
+            display: inline-block;
+        }
+
+        .countdown-timer {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #dc3545;
+            text-align: center;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f8d7da;
+            border-radius: 8px;
+            border: 1px solid #f5c6cb;
+        }
+
+        .disclaimer-box {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            border-radius: 5px;
+        }
+        .disclaimer-box p {
+            margin: 0;
+            font-size: 0.85rem;
+            color: #856404;
+        }
+
+        /* --- Footer Styles --- */
+        .site-footer {
+            text-align: center;
+            padding: 20px;
+            margin-top: 40px;
+            border-top: 1px solid #e0e0e0;
+            color: #6c757d;
+            font-size: 0.9rem;
+        }
+        .site-footer p { margin: 0; }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 768px) {
+            .dashboard-header {
+                flex-direction: column;
+                text-align: center;
+            }
+            .header-left {
+                margin-bottom: 20px;
+            }
+            .dashboard-header h1 { font-size: 2rem; }
+            .card { padding: 20px; }
+            .card-header { flex-direction: column; align-items: flex-start; gap: 10px; }
+            .payment-code-display {
+                font-size: 1.2rem;
+            }
+        }
+        @media (max-width: 480px) {
+            .dashboard-container { padding: 15px; }
+            .dashboard-header h1 { font-size: 1.75rem; }
+            .banner-container { grid-template-columns: 1fr; }
+            .modal-content { padding: 20px; }
+            .modal-header h2 { font-size: 1.5rem; }
+            .countdown-timer { font-size: 1.2rem; }
+            .payment-code-display {
+                font-size: 1.1rem;
+                letter-spacing: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard-container">
+        <!-- Header -->
+        <div class="dashboard-header">
+            <div class="header-left">
+                <h1>Kantor Imigrasi Kelas 1 Non TPI Pemalang</h1>
+                <p>Permohonan Pengurusan Paspor WNI</p>
+            </div>
+            <div class="header-right">
+                <div class="balance-bar">
+                    <p>Saldo Agency</p>
+                    <h2>Rp 78,470,00</h2>
+                </div>
+            </div>
+        </div>
+
+        <!-- Banner Section -->
+        <div class="banner-container">
+            <img src="https://z-cdn-media.chatglm.cn/files/019abfcd-d2e4-457a-8b39-9965cc2b4e65.jpg?auth_key=1864862396-a8822ca89f05425b92f9528676bd25bd-0-c69a5f444b5ebfab82a8eeeaa5456fb1" alt="Layanan Paspor" class="banner-image">
+            <img src="https://z-cdn-media.chatglm.cn/files/ba42d782-0615-404f-b6bf-59abde9876da.jpeg?auth_key=1864862396-3db8f98b9c384aaca1c0a3b7b54b49e1-0-c02ee4b24190c23e4579ad7199bb1277" alt="Kantor Imigrasi Pemalang" class="banner-image">
+            <img src="https://z-cdn-media.chatglm.cn/files/c5584cd5-a734-4bc1-9fec-7840269f159f.jpg?auth_key=1864862396-3a896579e6e9451f890e742be8089eab-0-4eee8b2020e3a914f3537ad86f569863" alt="Loket Pelayanan" class="banner-image">
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content-wrapper">
+            <!-- Card untuk Data Menunggu Verifikasi -->
+            <div class="card card-urgent">
+                <div class="card-header">
+                    <h3 style="color: #dc3545; font-size: 1.2rem;">⚠️ Perlu Verifikasi Segera</h3>
+                    <span class="badge badge-danger">Menunggu Verifikasi Lanjut</span>
+                </div>
+                <div class="card-body">
+                    <p><strong>Nama:</strong> SONHAJI</p>
+                    <p><strong>NIK:</strong> 3327092109890010</p>
+                    <p><strong>Jenis Layanan:</strong> Pembuatan Paspor Baru Elektronik 5 Tahun</p>
+                    <p><strong>Tanggal Pendaftaran:</strong> 18 Desember 2025</p>
+                    <p><strong>Tanggal Kedatangan:</strong> 19 Desember 2025 Pukul 13:30 WIB</p>
+                </div>
+                <!-- Area untuk tombol, loader, dan input -->
+                <div id="actionContainer" class="action-area">
+                    <button id="completeBtn" class="btn btn-primary">Selesaikan</button>
+                </div>
+            </div>
+
+            <!-- Informasi Daftar Data Approved -->
+            <p class="section-header">Total data disetujui: 170 — Menampilkan 10 data terbaru</p>
+
+            <!-- Daftar Data Visa Approved (Dummy) -->
+            <div class="card card-approved">
+                <div class="card-header"><span class="badge badge-success">Approved</span></div>
+                <div class="card-body"><p><strong>Nama:</strong> Siti Nurhaliza</p><p><strong>No Paspor:</strong> A12345678</p><p><strong>Tanggal Pengajuan:</strong> 1 Desember 2025</p></div>
+            </div>
+            <div class="card card-approved">
+                <div class="card-header"><span class="badge badge-success">Approved</span></div>
+                <div class="card-body"><p><strong>Nama:</strong> Budi Santoso</p><p><strong>No Paspor:</strong> B98765432</p><p><strong>Tanggal Pengajuan:</strong> 28 November 2025</p></div>
+            </div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Andi Wijaya</p><p><strong>No Paspor:</strong> C55556667</p><p><strong>Tanggal Pengajuan:</strong> 15 November 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Dewi Lestari</p><p><strong>No Paspor:</strong> D87654321</p><p><strong>Tanggal Pengajuan:</strong> 5 November 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Ahmad Fauzi</p><p><strong>No Paspor:</strong> E11223344</p><p><strong>Tanggal Pengajuan:</strong> 21 Oktober 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Rina Permata</p><p><strong>No Paspor:</strong> F99887766</p><p><strong>Tanggal Pengajuan:</strong> 10 Oktober 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Joko Prasetyo</p><p><strong>No Paspor:</strong> G13579246</p><p><strong>Tanggal Pengajuan:</strong> 30 September 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Maya Putri</p><p><strong>No Paspor:</strong> H24680135</p><p><strong>Tanggal Pengajuan:</strong> 18 September 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Doni Kurniawan</p><p><strong>No Paspor:</strong> I98765432</p><p><strong>Tanggal Pengajuan:</strong> 5 September 2025</p></div></div>
+            <div class="card card-approved"><div class="card-header"><span class="badge badge-success">Approved</span></div><div class="card-body"><p><strong>Nama:</strong> Fitri Handayani</p><p><strong>No Paspor:</strong> J12345678</p><p><strong>Tanggal Pengajuan:</strong> 4 Juli 2025</p></div></div>
+
+            <!-- Tombol untuk melihat data lainnya -->
+            <button id="seeMoreBtn" class="btn btn-secondary">Lihat 170 data lainnya</button>
+        </div>
+    </div>
+
+    <!-- Footer Hak Cipta -->
+    <footer class="site-footer">
+        <p>&copy; 2025 VFS Global. All Rights Reserved.</p>
+    </footer>
+
+    <!-- Modal Pembayaran -->
+    <div id="paymentModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <div class="modal-header">
+                <img src="https://z-cdn-media.chatglm.cn/files/1eca3764-3f0c-4269-94e7-da8742deb075.png?auth_key=1865694706-fe43d9bb2d4a4e1aa66a4003d2ee292c-0-aa32bd4656a9775c464fa5b26a7fb3b8" alt="Logo Imigrasi" class="modal-logo">
+                <h2>Detail Pembayaran Paspor</h2>
+            </div>
+            <div class="modal-body">
+                <p><strong>Kantor:</strong> Kantor Imigrasi Kelas 1 Non TPI Pemalang</p>
+                <p><strong>Alamat:</strong> Jl. Jenderal Sudirman No. 101, Pelutan, Kec. Pemalang, Kabupaten Pemalang, Jawa Tengah 52314</p>
+                <p><strong>Jenis Permohonan:</strong> Pembuatan Paspor Baru Elektronik 5 Tahun</p>
+                <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
+                <p><strong>Nama Pemohon:</strong> SONHAJI</p>
+                <p><strong>NIK:</strong> 3327092109890010</p>
+                <p><strong>Tanggal Pendaftaran:</strong> 18 Desember 2025</p>
+                <p><strong>Tanggal Kedatangan:</strong> 19 Desember 2025 Pukul 13:30 WIB</p>
+                <p><strong>Nominal Pembayaran:</strong> Rp 653.500,00</p>
+                
+                <div class="copy-code-container">
+                    <p><strong>Kode Pembayaran:</strong></p>
+                    <span id="paymentCode" class="payment-code-display">910266000001572095</span>
+                    <button id="copyCodeBtn" class="btn btn-copy">Salin</button>
+                </div>
+                <p style="font-size: 0.8rem; color: #6c757d; margin-top: 5px;"><em>Catatan: Pembayaran ini melalui kode akun agency yang sepenuhnya menjamin pemohon.</em></p>
+
+                <hr style="margin: 15px 0; border:0; border-top:1px solid #eee;">
+                <p><strong>Garansi Agency:</strong></p>
+                <p style="font-size:0.9rem; color:#555;">Pendaftaran ini dijamin sepenuhnya oleh akun agency:</p>
+                <p style="font-size:0.9rem; color:#555;"><strong>Email:</strong> asepsh@agency.com</p>
+                <p style="font-size:0.9rem; color:#555;"><strong>ID:</strong> 3747463730084783</p>
+                <p style="font-size:0.9rem; color:#555;"><strong>Nama:</strong> Asep wijaya SH</p>
+                
+                <div id="countdown" class="countdown-timer">
+                    <!-- Timer akan dimuat di sini oleh JavaScript -->
+                </div>
+
+                <div class="disclaimer-box">
+                    <p><strong>Catatan Penting:</strong></p>
+                    <p>Jangan lupa batas waktu pembayaran sesuai dengan batas waktu yang sudah ditentukan. Pembayaran di luar batas waktu tersebut maka bukan kesalahan kami dan kami tidak bertanggung jawab adanya kerugian dalam hal apapun di luar batas waktu tersebut.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // --- ELEMEN DOM ---
+            const completeBtn = document.getElementById('completeBtn');
+            const actionContainer = document.getElementById('actionContainer');
+            const seeMoreBtn = document.getElementById('seeMoreBtn');
+            const paymentModal = document.getElementById('paymentModal');
+            const closeModalBtn = document.querySelector('.close');
+            const countdownEl = document.getElementById('countdown');
+            const copyCodeBtn = document.getElementById('copyCodeBtn');
+            const paymentCodeEl = document.getElementById('paymentCode');
+
+            // --- KONSTANTA & VARIABEL ---
+            const CORRECT_NIK = "3327092109890010"; // Updated NIK
+            const TIMER_DURATION_KEY = 'paymentDeadline';
+            let timerInterval = null;
+
+            // --- LOGIKA TOMBOl "SELESAIKAN" ---
+            completeBtn.addEventListener('click', function() {
+                actionContainer.innerHTML = '<div class="spinner"></div>';
+                setTimeout(() => {
+                    actionContainer.innerHTML = `
+                        <input type="text" id="passportInput" class="form-control" placeholder="Masukkan NIK Anda">
+                        <div id="passportError" class="invalid-feedback">NIK salah.</div>
+                        <button id="submitPassportBtn" class="btn btn-primary">Verifikasi</button>
+                    `;
+                    document.getElementById('submitPassportBtn').addEventListener('click', handlePassportSubmission);
+                }, 1500);
+            });
+
+            // --- LOGIKA VERIFIKASI PASPOR ---
+            function handlePassportSubmission() {
+                const passportInput = document.getElementById('passportInput');
+                const passportError = document.getElementById('passportError');
+                const submitBtn = document.getElementById('submitPassportBtn');
+                
+                // Tampilkan loading
+                const originalText = submitBtn.innerHTML;
+                submitBtn.disabled = true;
+                submitBtn.innerHTML = `<span class="btn-spinner"></span> Memverifikasi...`;
+
+                setTimeout(() => {
+                    if (passportInput.value.trim() === CORRECT_NIK) {
+                        passportInput.classList.remove('is-invalid');
+                        passportError.style.display = 'none';
+                        openPaymentModal();
+                    } else {
+                        passportInput.classList.add('is-invalid');
+                        passportError.style.display = 'block';
+                    }
+                    // Kembalikan tombol ke keadaan semula
+                    submitBtn.disabled = false;
+                    submitBtn.innerHTML = originalText;
+                }, 1000); // Simulasi delay 1 detik
+            }
+
+            // --- LOGIKA MODAL PEMBAYARAN ---
+            function openPaymentModal() {
+                paymentModal.style.display = 'flex';
+                startCountdown();
+            }
+
+            function closePaymentModal() {
+                paymentModal.style.display = 'none';
+                // Timer tetap berjalan meskipun modal ditutup
+            }
+
+            closeModalBtn.addEventListener('click', closePaymentModal);
+            window.addEventListener('click', function(event) {
+                if (event.target == paymentModal) {
+                    closePaymentModal();
+                }
+            });
+
+            // --- LOGIKA COPY KODE ---
+            copyCodeBtn.addEventListener('click', function() {
+                const codeToCopy = paymentCodeEl.innerText;
+                navigator.clipboard.writeText(codeToCopy).then(() => {
+                    const originalText = copyCodeBtn.innerText;
+                    copyCodeBtn.innerText = 'Tersalin!';
+                    setTimeout(() => {
+                        copyCodeBtn.innerText = originalText;
+                    }, 2000);
+                }).catch(err => {
+                    console.error('Gagal menyalin teks: ', err);
+                    alert('Gagal menyalin kode. Silakan salin secara manual.');
+                });
+            });
+
+            // --- LOGIKA COUNTDOWN TIMER ---
+            function startCountdown() {
+                // Cek apakah sudah ada deadline yang tersimpan
+                let deadline = localStorage.getItem(TIMER_DURATION_KEY);
+                
+                // Jika belum ada, buat deadline baru (2 jam dari sekarang)
+                if (!deadline) {
+                    deadline = new Date().getTime() + (2 * 60 * 60 * 1000); // 2 jam
+                    localStorage.setItem(TIMER_DURATION_KEY, deadline);
+                }
+                
+                // Hentikan timer yang sudah ada sebelum membuat yang baru
+                if (timerInterval) clearInterval(timerInterval);
+
+                // Mulai countdown
+                timerInterval = setInterval(function() {
+                    const now = new Date().getTime();
+                    const distance = deadline - now;
+                    
+                    // Jika waktu habis
+                    if (distance < 0) {
+                        clearInterval(timerInterval);
+                        localStorage.removeItem(TIMER_DURATION_KEY);
+                        countdownEl.innerHTML = "Waktu Habis";
+                        return;
+                    }
+                    
+                    // Hitung jam, menit, dan detik
+                    const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                    const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                    const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                    
+                    // Tampilkan countdown
+                    countdownEl.innerHTML = `Sisa Waktu: ${hours.toString().padStart(2, '0')}:${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                }, 1000);
+            }
+            
+            // --- LOGIKA TOMBOl "LIHAT LAINNYA" ---
+            seeMoreBtn.addEventListener('click', function() {
+                alert('Terjadi masalah jaringan.');
+            });
+            
+            // Cek apakah ada timer yang sedang berjalan saat halaman dimuat
+            const existingDeadline = localStorage.getItem(TIMER_DURATION_KEY);
+            if (existingDeadline) {
+                const now = new Date().getTime();
+                if (now < existingDeadline) {
+                    // Timer masih valid, tampilkan countdown di latar belakang
+                    startCountdown();
+                } else {
+                    // Timer sudah habis, hapus dari localStorage
+                    localStorage.removeItem(TIMER_DURATION_KEY);
+                }
+            }
+        });
+    </script>
+
+</body>
+</html>
